@@ -1,0 +1,31 @@
+# JetBrains / IDE
+.idea/
+.vs/
+
+# .NET build outputs
+**/bin/
+**/obj/
+
+# Unity generated and local-only data
+client/AmberTowerClient/[Ll]ibrary/
+client/AmberTowerClient/[Tt]emp/
+client/AmberTowerClient/[Oo]bj/
+client/AmberTowerClient/[Ll]ogs/
+client/AmberTowerClient/[Bb]uild/
+client/AmberTowerClient/[Bb]uilds/
+client/AmberTowerClient/UserSettings/
+client/AmberTowerClient/MemoryCaptures/
+client/AmberTowerClient/Recordings/
+
+# Unity generated solution and project files
+client/AmberTowerClient/*.csproj
+client/AmberTowerClient/*.sln
+client/AmberTowerClient/*.suo
+client/AmberTowerClient/*.tmp
+client/AmberTowerClient/*.user
+client/AmberTowerClient/*.userprefs
+client/AmberTowerClient/*.pidb
+client/AmberTowerClient/*.booproj
+client/AmberTowerClient/*.svd
+client/AmberTowerClient/*.pdb
+
