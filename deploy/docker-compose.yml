@@ -1,0 +1,11 @@
+services:
+  apigateway:
+    build:
+      context: ..
+      dockerfile: backend/AmberTowerBackend/src/ApiGateway/Dockerfile
+    container_name: ambertower-apigateway
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+    ports:
+      - "8080:8080"
