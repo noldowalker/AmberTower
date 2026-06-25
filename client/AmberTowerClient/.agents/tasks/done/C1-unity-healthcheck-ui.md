@@ -4,7 +4,7 @@
 
 Create a minimal UI Toolkit screen for checking backend availability from the Unity client.
 
-## Current State
+## Outcome
 
 1. A form exists with:
    - address input field
@@ -15,7 +15,4 @@ Create a minimal UI Toolkit screen for checking backend availability from the Un
    - sends an HTTP request
    - updates the status indicator based on the result
 3. The panel handles failed requests and request exceptions without hanging in the loading state.
-
-## Remaining Condition For Done
-
-Move this task to `done` only after explicit user confirmation.
+4. Client-side code style rules were documented in `.agents/CODESTYLE.md` and applied to the current implementation.
