@@ -233,6 +233,24 @@ Wait for explicit approval.
 Make focused changes.
 Summarize changed files and what was not verified.
 ```
+
+Unity client task files must use the `C<number>-name-of-task.md` format inside:
+
+```text
+.agents/
+  tasks/
+    backlog/
+    current/
+    done/
+```
+
+Examples:
+
+```text
+C1-healthcheck-ui.md
+C2-auth-login-panel.md
+```
+
 Do not regenerate Unity project files unless explicitly requested.
 
 Do not make broad project restructuring changes unless explicitly requested.

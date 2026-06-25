@@ -11,8 +11,8 @@ Keep a minimal backend entry point available for Unity connectivity checks.
 - `GET /health` returns a health-check JSON payload
 - Docker compose exposes the service on `http://localhost:8080`
 
-## Next Relevant Backend Tasks
+## Outcome
 
-1. Keep `ApiGateway` health endpoint stable for client smoke tests.
-2. Preserve local Docker workflow for `http://localhost:8080/health`.
-3. Extend `ApiGateway` only after Unity client smoke test is working.
+1. `ApiGateway` health endpoint is available for Unity smoke tests.
+2. Local Docker workflow is available for `http://localhost:8080/health`.
+3. The Unity client health-check UI can use this endpoint as its current backend target.

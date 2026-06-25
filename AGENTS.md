@@ -275,6 +275,32 @@ Do not create autonomous task-runner folders such as:
 
 unless explicitly requested.
 
+## Task Tracking Rules
+
+Use task files inside project-local `.agents/tasks/` folders when the user requests task tracking.
+
+Task folders must use this structure:
+
+```text
+.agents/
+  tasks/
+    backlog/
+    current/
+    done/
+```
+
+Move task files between `backlog`, `current`, and `done` according to their actual status.
+
+Move a task to `done` only after explicit user confirmation that the task is complete.
+
+Task numbering format is defined by each project-specific `AGENTS.md`.
+
+When starting a new implementation task in Git, create a branch from `master` named after the task file and switch to it before making code changes.
+
+The user creates commits manually.
+
+Review workflow details may be added later and should not be invented in advance.
+
 ## Git and Generated Files
 
 Do not commit generated, temporary, cache, build, or IDE-specific files unless they are intentionally part of the project.

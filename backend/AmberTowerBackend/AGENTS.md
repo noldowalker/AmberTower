@@ -587,6 +587,23 @@ Before editing backend files:
 6. Run relevant checks when possible.
 7. Summarize changed files and verification results.
 
+Backend task files must use the `B<number>-name-of-task.md` format inside:
+
+```text
+.agents/
+  tasks/
+    backlog/
+    current/
+    done/
+```
+
+Examples:
+
+```text
+B1-api-gateway-bootstrap.md
+B2-wallet-service-outline.md
+```
+
 Do not create multiple services, infrastructure, tests, and documentation in one large change unless explicitly requested.
 
 Do not silently change architecture.
