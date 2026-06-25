@@ -5,6 +5,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B9AF4BAE-3BD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "src\ApiGateway\ApiGateway.csproj", "{3C24DFA6-CD1C-431F-8646-4C9CBE870C23}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F521D497-3E8F-412E-B0C3-4C27C7DA35F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Tests", "tests\AuthService.Tests\AuthService.Tests.csproj", "{B8B12073-9652-4E60-86FB-D558EBC58FA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +19,13 @@ Global
 		{3C24DFA6-CD1C-431F-8646-4C9CBE870C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C24DFA6-CD1C-431F-8646-4C9CBE870C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C24DFA6-CD1C-431F-8646-4C9CBE870C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B12073-9652-4E60-86FB-D558EBC58FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B12073-9652-4E60-86FB-D558EBC58FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B12073-9652-4E60-86FB-D558EBC58FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B12073-9652-4E60-86FB-D558EBC58FA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3C24DFA6-CD1C-431F-8646-4C9CBE870C23} = {B9AF4BAE-3BD1-489F-ABAE-14E876633D60}
+		{B8B12073-9652-4E60-86FB-D558EBC58FA9} = {F521D497-3E8F-412E-B0C3-4C27C7DA35F1}
 	EndGlobalSection
 EndGlobal

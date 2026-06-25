@@ -1,6 +1,7 @@
 # JetBrains / IDE
 .idea/
 .vs/
+*.DotSettings.user
 
 # .NET build outputs
 **/bin/
@@ -28,4 +29,3 @@ client/AmberTowerClient/*.pidb
 client/AmberTowerClient/*.booproj
 client/AmberTowerClient/*.svd
 client/AmberTowerClient/*.pdb
-
