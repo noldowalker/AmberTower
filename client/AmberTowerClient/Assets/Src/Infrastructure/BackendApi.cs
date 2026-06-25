@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using AmberTower.Client.Infrastructure.Responses;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -46,29 +47,6 @@ namespace AmberTower.Client.Infrastructure
 
             onCompleted?.Invoke(HealthCheckResult.Fail(errorMessage));
             request.Dispose();
-        }
-    }
-
-    public sealed class HealthCheckResult
-    {
-        private HealthCheckResult(bool isSuccess, string message)
-        {
-            IsSuccess = isSuccess;
-            Message = message;
-        }
-
-        public bool IsSuccess { get; }
-
-        public string Message { get; }
-
-        public static HealthCheckResult Ok(string message)
-        {
-            return new HealthCheckResult(true, message);
-        }
-
-        public static HealthCheckResult Fail(string message)
-        {
-            return new HealthCheckResult(false, message);
         }
     }
 }

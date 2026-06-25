@@ -8,6 +8,14 @@ The Unity client is a game client for interacting with the AmberTower backend th
 
 The client must stay decoupled from backend internal implementation details.
 
+Additional client-specific coding conventions may be documented in:
+
+```text
+client/AmberTowerClient/.agents/CODESTYLE.md
+```
+
+When present, follow that document in addition to this file.
+
 ## Expected Location
 
 Expected Unity client location:

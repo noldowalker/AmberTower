@@ -1,5 +1,6 @@
 using System.Collections;
 using AmberTower.Client.Infrastructure;
+using AmberTower.Client.Infrastructure.Responses;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,10 +9,10 @@ namespace AmberTower.Client.Ui.HealthCheck
     [RequireComponent(typeof(UIDocument))]
     public sealed class HealthCheckPanel : MonoBehaviour
     {
-        private const string StatusIdleClass = "status-indicator--idle";
-        private const string StatusLoadingClass = "status-indicator--loading";
-        private const string StatusSuccessClass = "status-indicator--success";
-        private const string StatusErrorClass = "status-indicator--error";
+        private const string STATUS_IDLE_CLASS = "status-indicator--idle";
+        private const string STATUS_LOADING_CLASS = "status-indicator--loading";
+        private const string STATUS_SUCCESS_CLASS = "status-indicator--success";
+        private const string STATUS_ERROR_CLASS = "status-indicator--error";
 
         [SerializeField]
         private string defaultHealthUrl = "http://localhost:8080/health";
@@ -19,13 +20,13 @@ namespace AmberTower.Client.Ui.HealthCheck
         [SerializeField]
         private StyleSheet panelStyleSheet;
 
-        private readonly BackendApi backendApi = new BackendApi();
+        private readonly BackendApi _backendApi = new BackendApi();
 
-        private Button checkButton;
-        private Label resultLabel;
-        private TextField urlField;
-        private VisualElement statusIndicator;
-        private Coroutine activeRequest;
+        private Button _checkButton;
+        private Label _resultLabel;
+        private TextField _urlField;
+        private VisualElement _statusIndicator;
+        private Coroutine _activeRequest;
 
         private void OnEnable()
         {
@@ -37,89 +38,89 @@ namespace AmberTower.Client.Ui.HealthCheck
                 root.styleSheets.Add(panelStyleSheet);
             }
 
-            urlField = root.Q<TextField>("health-url-field");
-            checkButton = root.Q<Button>("health-check-button");
-            statusIndicator = root.Q<VisualElement>("health-status-indicator");
-            resultLabel = root.Q<Label>("health-result-label");
+            _urlField = root.Q<TextField>("health-url-field");
+            _checkButton = root.Q<Button>("health-check-button");
+            _statusIndicator = root.Q<VisualElement>("health-status-indicator");
+            _resultLabel = root.Q<Label>("health-result-label");
 
-            if (urlField == null || checkButton == null || statusIndicator == null || resultLabel == null)
+            if (_urlField == null || _checkButton == null || _statusIndicator == null || _resultLabel == null)
             {
                 Debug.LogError("HealthCheckPanel UI elements were not found.");
                 enabled = false;
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(urlField.value))
+            if (string.IsNullOrWhiteSpace(_urlField.value))
             {
-                urlField.value = defaultHealthUrl;
+                _urlField.value = defaultHealthUrl;
             }
-            checkButton.clicked += OnCheckClicked;
+            _checkButton.clicked += OnCheckClicked;
 
             SetIdleState("Ready.");
         }
 
         private void OnDisable()
         {
-            checkButton.clicked -= OnCheckClicked;
+            _checkButton.clicked -= OnCheckClicked;
 
-            if (activeRequest != null)
-            {
-                StopCoroutine(activeRequest);
-                activeRequest = null;
-            }
+            if (_activeRequest == null) 
+                return;
+            
+            StopCoroutine(_activeRequest);
+            _activeRequest = null;
         }
 
         private void OnCheckClicked()
         {
-            if (activeRequest != null)
+            if (_activeRequest != null)
             {
-                StopCoroutine(activeRequest);
+                StopCoroutine(_activeRequest);
             }
 
-            checkButton.SetEnabled(false);
-            SetStatus(StatusLoadingClass, "Checking...");
+            _checkButton.SetEnabled(false);
+            SetStatus(STATUS_LOADING_CLASS, "Checking...");
 
-            activeRequest = StartCoroutine(RunHealthCheck(urlField.value));
+            _activeRequest = StartCoroutine(RunHealthCheck(_urlField.value));
         }
 
         private IEnumerator RunHealthCheck(string url)
         {
             HealthCheckResult result = null;
 
-            yield return backendApi.CheckHealth(url, response => result = response);
+            yield return _backendApi.CheckHealth(url, response => result = response);
 
-            checkButton.SetEnabled(true);
-            activeRequest = null;
+            _checkButton.SetEnabled(true);
+            _activeRequest = null;
 
             if (result == null)
             {
-                SetStatus(StatusErrorClass, "No response.");
+                SetStatus(STATUS_ERROR_CLASS, "No response.");
                 yield break;
             }
 
             if (result.IsSuccess)
             {
-                SetStatus(StatusSuccessClass, result.Message);
+                SetStatus(STATUS_SUCCESS_CLASS, result.Message);
                 yield break;
             }
 
-            SetStatus(StatusErrorClass, result.Message);
+            SetStatus(STATUS_ERROR_CLASS, result.Message);
         }
 
         private void SetIdleState(string message)
         {
-            SetStatus(StatusIdleClass, message);
+            SetStatus(STATUS_IDLE_CLASS, message);
         }
 
         private void SetStatus(string statusClass, string message)
         {
-            statusIndicator.RemoveFromClassList(StatusIdleClass);
-            statusIndicator.RemoveFromClassList(StatusLoadingClass);
-            statusIndicator.RemoveFromClassList(StatusSuccessClass);
-            statusIndicator.RemoveFromClassList(StatusErrorClass);
-            statusIndicator.AddToClassList(statusClass);
+            _statusIndicator.RemoveFromClassList(STATUS_IDLE_CLASS);
+            _statusIndicator.RemoveFromClassList(STATUS_LOADING_CLASS);
+            _statusIndicator.RemoveFromClassList(STATUS_SUCCESS_CLASS);
+            _statusIndicator.RemoveFromClassList(STATUS_ERROR_CLASS);
+            _statusIndicator.AddToClassList(statusClass);
 
-            resultLabel.text = message;
+            _resultLabel.text = message;
         }
     }
 }
