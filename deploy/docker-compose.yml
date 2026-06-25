@@ -4,8 +4,48 @@ services:
       context: ..
       dockerfile: backend/AmberTowerBackend/src/ApiGateway/Dockerfile
     container_name: ambertower-apigateway
+    depends_on:
+      authservice:
+        condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://0.0.0.0:8080
+      Grpc__AuthServiceUrl: http://authservice:8081
     ports:
       - "8080:8080"
+
+  authservice:
+    build:
+      context: ..
+      dockerfile: backend/AmberTowerBackend/src/AuthService/Dockerfile
+    container_name: ambertower-authservice
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Ports__Http: 8080
+      Ports__Grpc: 8081
+      ConnectionStrings__AuthDatabase: Host=postgres;Port=5432;Database=ambertower_auth;Username=postgres;Password=local-dev-only
+      Jwt__Issuer: AmberTower
+      Jwt__Audience: AmberTower.UnityClient
+      Jwt__Key: local-dev-only-change-me-please-32-bytes-minimum
+
+  postgres:
+    image: postgres:16
+    container_name: ambertower-postgres
+    environment:
+      POSTGRES_DB: ambertower_auth
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: local-dev-only
+    volumes:
+      - ambertower-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ambertower_auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  ambertower-postgres-data:
