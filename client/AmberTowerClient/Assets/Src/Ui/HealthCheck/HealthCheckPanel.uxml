@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement class="health-check-screen">
+        <ui:VisualElement class="health-check-panel">
+            <ui:Label class="health-check-panel__title" text="Backend Health Check" />
+            <ui:TextField
+                name="health-url-field"
+                class="health-check-panel__url-field"
+                label="Address" />
+            <ui:VisualElement class="health-check-panel__actions">
+                <ui:Button
+                    name="health-check-button"
+                    class="health-check-panel__button"
+                    text="Check" />
+                <ui:VisualElement
+                    name="health-status-indicator"
+                    class="status-indicator status-indicator--idle" />
+            </ui:VisualElement>
+            <ui:Label
+                name="health-result-label"
+                class="health-check-panel__result"
+                text="Ready." />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
