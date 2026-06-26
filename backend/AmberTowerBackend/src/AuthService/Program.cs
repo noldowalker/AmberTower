@@ -1,4 +1,5 @@
 using AuthService.Application;
+using AuthService.Extensions;
 using AuthService.Grpc;
 using AuthService.Infrastructure;
 using AuthService.Options;
@@ -45,17 +46,6 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
-app.MapGrpcService<AuthGrpcService>();
-app.MapGet("/", () => Results.Ok(new
-{
-    service = "AuthService",
-    message = "AmberTower authentication internal gRPC service"
-}));
-app.MapGet("/health", () => Results.Ok(new
-{
-    status = "ok",
-    service = "AuthService",
-    utcTime = DateTime.UtcNow
-}));
+app.MapAuthApplicationEndpoints();
 
 app.Run();

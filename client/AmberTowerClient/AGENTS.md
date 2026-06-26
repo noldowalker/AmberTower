@@ -16,6 +16,14 @@ client/AmberTowerClient/.agents/CODESTYLE.md
 
 When present, follow that document in addition to this file.
 
+Client agents must always read and follow:
+
+```text
+client/AmberTowerClient/.agents/CODESTYLE.md
+```
+
+Code style rules are mandatory for all client changes.
+
 ## Expected Location
 
 Expected Unity client location:
@@ -236,6 +244,7 @@ Before editing Unity files:
 
 ```Inspect the current Unity project structure.
 Read this file.
+Read and follow client/AmberTowerClient/.agents/CODESTYLE.md.
 Propose a short plan.
 Wait for explicit approval.
 Make focused changes.

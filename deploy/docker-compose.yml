@@ -7,10 +7,13 @@ services:
     depends_on:
       authservice:
         condition: service_healthy
+      profileservice:
+        condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://0.0.0.0:8080
       Grpc__AuthServiceUrl: http://authservice:8081
+      Grpc__ProfileServiceUrl: http://profileservice:8083
       Jwt__Issuer: AmberTower
       Jwt__Audience: AmberTower.UnityClient
       Jwt__Key: local-dev-only-change-me-please-32-bytes-minimum
@@ -35,6 +38,20 @@ services:
       Jwt__Key: local-dev-only-change-me-please-32-bytes-minimum
       RefreshTokens__LifetimeDays: 30
 
+  profileservice:
+    build:
+      context: ..
+      dockerfile: backend/AmberTowerBackend/src/ProfileService/Dockerfile
+    container_name: ambertower-profileservice
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Ports__Http: 8082
+      Ports__Grpc: 8083
+      ConnectionStrings__ProfileDatabase: Host=postgres;Port=5432;Database=ambertower_profile;Username=postgres;Password=local-dev-only
+
   postgres:
     image: postgres:16
     container_name: ambertower-postgres
@@ -44,6 +61,7 @@ services:
       POSTGRES_PASSWORD: local-dev-only
     volumes:
       - ambertower-postgres-data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d ambertower_auth"]
       interval: 10s

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contracts\AmberTower.Auth.Contracts\AmberTower.Auth.Contracts.csproj" />
+    <ProjectReference Include="..\Contracts\AmberTower.Profile.Contracts\AmberTower.Profile.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
