@@ -1,0 +1,80 @@
+.auth-screen {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-color: rgb(16, 24, 30);
+}
+
+.auth-panel {
+    width: 440px;
+    min-height: 320px;
+    padding: 16px;
+    gap: 12px;
+    background-color: rgb(28, 34, 40);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(66, 75, 86);
+    border-right-color: rgb(66, 75, 86);
+    border-top-color: rgb(66, 75, 86);
+    border-bottom-color: rgb(66, 75, 86);
+}
+
+.auth-panel__header {
+    gap: 4px;
+}
+
+.auth-panel__title {
+    font-size: 18px;
+    color: rgb(242, 245, 248);
+    unity-font-style: bold;
+}
+
+.auth-panel__state {
+    color: rgb(164, 174, 186);
+}
+
+.auth-panel__field {
+    color: rgb(242, 245, 248);
+}
+
+.auth-panel__field .unity-base-text-field__input {
+    color: rgb(17, 24, 39);
+    background-color: rgb(248, 250, 252);
+}
+
+.auth-panel__actions {
+    flex-direction: row;
+    gap: 10px;
+}
+
+.auth-panel__button {
+    min-width: 128px;
+    height: 36px;
+}
+
+.auth-panel__button--secondary {
+    background-color: rgb(76, 86, 99);
+}
+
+.auth-panel__session {
+    gap: 10px;
+}
+
+.auth-panel__session-email {
+    min-height: 24px;
+    color: rgb(242, 245, 248);
+    unity-font-style: bold;
+}
+
+.auth-panel__result {
+    min-height: 48px;
+    white-space: normal;
+    color: rgb(214, 220, 226);
+}
