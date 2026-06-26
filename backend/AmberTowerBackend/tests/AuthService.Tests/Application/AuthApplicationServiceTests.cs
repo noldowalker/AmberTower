@@ -158,6 +158,20 @@ public sealed class AuthApplicationServiceTests
         Assert.That(token.RevokedAtUtc, Is.Not.Null);
     }
 
+    [Test]
+    public async Task LogoutAsync_ShouldRejectRefreshToken_WhenTokenDoesNotExist()
+    {
+        var service = CreateService(
+            new InMemoryAuthUserRepository(),
+            new InMemoryRefreshTokenRepository(),
+            new FakeRefreshTokenService("refresh-token-2"));
+
+        var result = await service.LogoutAsync("unknown-refresh-token", CancellationToken.None);
+
+        Assert.That(result.IsSuccess, Is.False);
+        Assert.That(result.ErrorCode, Is.EqualTo(AuthErrorCodes.InvalidRefreshToken));
+    }
+
     private static AuthUser CreateUser()
     {
         return new AuthUser

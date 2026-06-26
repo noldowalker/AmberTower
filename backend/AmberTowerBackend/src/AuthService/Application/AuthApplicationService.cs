@@ -183,11 +183,17 @@ public sealed class AuthApplicationService
             _refreshTokenService.Hash(refreshToken),
             cancellationToken);
 
-        if (storedRefreshToken is not null && storedRefreshToken.RevokedAtUtc is null)
+        if (storedRefreshToken is null || !IsRefreshTokenActive(storedRefreshToken))
         {
-            storedRefreshToken.RevokedAtUtc = DateTime.UtcNow;
-            await _refreshTokenRepository.SaveChangesAsync(cancellationToken);
+            return new LogoutSessionResult
+            {
+                ErrorCode = AuthErrorCodes.InvalidRefreshToken,
+                ErrorMessage = "Refresh token is invalid or expired."
+            };
         }
+
+        storedRefreshToken.RevokedAtUtc = DateTime.UtcNow;
+        await _refreshTokenRepository.SaveChangesAsync(cancellationToken);
 
         return new LogoutSessionResult
         {

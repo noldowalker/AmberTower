@@ -41,6 +41,7 @@ public static class AuthEndpoints
             .Accepts<LogoutHttpRequest>("application/json")
             .Produces<LogoutHttpResponse>(StatusCodes.Status200OK)
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest)
+            .Produces<ApiErrorResponse>(StatusCodes.Status401Unauthorized)
             .Produces<ApiErrorResponse>(StatusCodes.Status503ServiceUnavailable);
 
         return group;
@@ -199,6 +200,9 @@ public static class AuthEndpoints
 
             return response.ErrorCode switch
             {
+                "invalid_refresh_token" => Results.Json(
+                    new ApiErrorResponse(response.ErrorCode, response.ErrorMessage),
+                    statusCode: StatusCodes.Status401Unauthorized),
                 "validation_error" => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage)),
                 _ => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage))
             };
