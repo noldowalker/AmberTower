@@ -16,6 +16,11 @@ Add currency display to the authenticated game home screen.
 4. Handle loading, success, unauthorized, refresh retry, and network failure states.
 5. If wallet request returns `401`, try refresh-token flow once and retry.
 6. If refresh fails, clear local session and return to login.
+7. Reuse the shared protected-request API layer introduced for authenticated endpoints:
+   - attach `Authorization: Bearer <accessToken>` automatically;
+   - on `401`, try refresh-token flow once;
+   - if refresh succeeds, retry the original protected request once;
+   - if refresh fails, clear local session and return to login.
 
 ## Constraints
 
@@ -32,7 +37,8 @@ Add currency display to the authenticated game home screen.
 - transaction history;
 - wallet mutation UI;
 - inventory;
-- gameplay economy balancing.
+- gameplay economy balancing;
+- advanced request queuing or parallel refresh coordination.
 
 ## Notes
 

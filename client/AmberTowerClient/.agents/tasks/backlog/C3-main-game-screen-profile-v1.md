@@ -29,6 +29,11 @@ Replace the authentication-only first screen with an authenticated game home scr
 7. Handle loading, success, validation error, unauthorized, and network failure states.
 8. If a protected call returns `401`, try refresh-token flow once and retry the protected call.
 9. If refresh fails, clear local session and return to login.
+10. Implement protected requests through a shared authentication-aware API layer:
+   - attach `Authorization: Bearer <accessToken>` automatically;
+   - on `401`, try refresh-token flow once;
+   - if refresh succeeds, retry the original protected request once;
+   - if refresh fails, clear local session and return to login.
 
 ## Constraints
 
@@ -46,7 +51,8 @@ Replace the authentication-only first screen with an authenticated game home scr
 - profile privacy settings;
 - friend lists;
 - gameplay navigation;
-- production-grade secure token storage implementation.
+- production-grade secure token storage implementation;
+- advanced request queuing or parallel refresh coordination.
 
 ## Notes
 
