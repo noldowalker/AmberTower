@@ -1,8 +1,8 @@
-namespace ApiGateway.Auth;
+namespace ApiGateway.Auth.Responses;
 
-public sealed class RefreshHttpResponse
+public sealed class LoginHttpResponse
 {
-    public RefreshHttpResponse(
+    public LoginHttpResponse(
         string userId,
         string email,
         string accessToken,

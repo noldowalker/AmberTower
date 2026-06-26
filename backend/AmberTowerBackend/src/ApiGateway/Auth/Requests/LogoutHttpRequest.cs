@@ -1,4 +1,4 @@
-namespace ApiGateway.Auth;
+namespace ApiGateway.Auth.Requests;
 
 public sealed class LogoutHttpRequest
 {

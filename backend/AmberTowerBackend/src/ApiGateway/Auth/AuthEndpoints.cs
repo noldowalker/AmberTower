@@ -1,4 +1,6 @@
 using AmberTower.Auth.Contracts;
+using ApiGateway.Auth.Requests;
+using ApiGateway.Auth.Responses;
 using Grpc.Core;
 
 namespace ApiGateway.Auth;
