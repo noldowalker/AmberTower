@@ -49,6 +49,7 @@ The current structure may be incomplete at early stages. Do not create missing f
 
 * Always inspect the existing repository structure before making changes.
 * Always propose a plan before editing files.
+* Always read and follow the nearest project-level code style document when it exists, for example `backend/AmberTowerBackend/.agents/CODESTYLE.md` or `client/AmberTowerClient/.agents/CODESTYLE.md`.
 * Keep changes small, focused, and reviewable.
 * Do not mix backend, client, infrastructure, and documentation changes in one task unless explicitly requested.
 * Do not perform broad refactoring, mass renaming, formatting-only changes, or project restructuring unless explicitly requested.
@@ -256,9 +257,12 @@ For every non-trivial task:
 1. Inspect the relevant files.
 2. Propose a short plan.
 3. Wait for explicit approval before editing files.
-4. Make focused changes.
-5. Run relevant checks when possible.
-6. Summarize results and changed files.
+4. Read and follow the relevant project code style document when it exists.
+5. Make focused changes.
+6. Run relevant checks when possible.
+7. Summarize results and changed files.
+
+Code style rules are mandatory. Treat them as required project constraints, not as optional preferences.
 
 For very small tasks, still state the intended change before making it.
 

@@ -1,10 +1,12 @@
 using ApiGateway.Auth;
 using ApiGateway.CurrentUser;
 using ApiGateway.Extensions;
+using ApiGateway.Profile;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthGrpcClient(builder.Configuration);
+builder.Services.AddProfileGrpcClient(builder.Configuration);
 builder.Services.AddGatewayAuthentication(builder.Configuration);
 builder.Services.AddGatewaySwagger();
 
@@ -19,20 +21,9 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/", () => Results.Ok(new
-{
-    service = "ApiGateway",
-    message = "AmberTower backend entry point"
-}));
-
-app.MapGet("/health", () => Results.Ok(new
-{
-    status = "ok",
-    service = "ApiGateway",
-    utcTime = DateTime.UtcNow
-}));
-
+app.MapGatewayApplicationEndpoints();
 app.MapAuthEndpoints();
 app.MapCurrentUserEndpoints();
+app.MapProfileEndpoints();
 
 app.Run();

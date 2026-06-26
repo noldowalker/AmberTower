@@ -8,6 +8,14 @@ AmberTower backend is a learning microservice-oriented game backend platform bui
 
 The backend should be production-inspired, but not over-engineered. Prefer clear service boundaries, explicit contracts, simple working implementations, and good tests.
 
+Backend agents must always read and follow:
+
+```text
+backend/AmberTowerBackend/.agents/CODESTYLE.md
+```
+
+Code style rules are mandatory for all backend changes.
+
 ## Backend Solution
 
 Expected backend solution location:
@@ -581,11 +589,14 @@ Before editing backend files:
 
 1. Inspect the current backend solution and project structure.
 2. Read this file.
-3. Propose a short implementation plan.
-4. Wait for explicit approval.
-5. Make focused changes.
-6. Run relevant checks when possible.
-7. Summarize changed files and verification results.
+3. Read and follow `backend/AmberTowerBackend/.agents/CODESTYLE.md`.
+4. Propose a short implementation plan.
+5. Wait for explicit approval.
+6. Make focused changes.
+7. Run relevant checks when possible.
+8. Summarize changed files and verification results.
+
+`Program.cs` must stay declarative. Do not declare HTTP or gRPC endpoints inline in `Program.cs`; map them through dedicated extension methods instead.
 
 Backend task files must use the `B<number>-name-of-task.md` format inside:
 

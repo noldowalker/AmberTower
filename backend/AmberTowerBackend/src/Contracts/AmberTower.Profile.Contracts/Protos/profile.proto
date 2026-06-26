@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option csharp_namespace = "AmberTower.Profile.Contracts";
+
+package ambertower.profile.v1;
+
+service ProfileGrpc {
+  rpc GetMyProfile (GetMyProfileRequest) returns (GetMyProfileResponse);
+  rpc UpdateMyProfile (UpdateMyProfileRequest) returns (UpdateMyProfileResponse);
+}
+
+message GetMyProfileRequest {
+  string auth_user_id = 1;
+  string email = 2;
+}
+
+message GetMyProfileResponse {
+  bool success = 1;
+  string player_id = 2;
+  string auth_user_id = 3;
+  string email = 4;
+  string nickname = 5;
+  string error_code = 6;
+  string error_message = 7;
+}
+
+message UpdateMyProfileRequest {
+  string auth_user_id = 1;
+  string email = 2;
+  string nickname = 3;
+}
+
+message UpdateMyProfileResponse {
+  bool success = 1;
+  string player_id = 2;
+  string auth_user_id = 3;
+  string email = 4;
+  string nickname = 5;
+  string error_code = 6;
+  string error_message = 7;
+}
