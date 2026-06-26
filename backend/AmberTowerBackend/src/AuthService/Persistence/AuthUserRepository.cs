@@ -13,6 +13,11 @@ public sealed class AuthUserRepository : IAuthUserRepository
         _dbContext = dbContext;
     }
 
+    public Task<AuthUser?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _dbContext.Users.SingleOrDefaultAsync(user => user.Id == id, cancellationToken);
+    }
+
     public Task<AuthUser?> GetByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
     {
         return _dbContext.Users.SingleOrDefaultAsync(user => user.Email == normalizedEmail, cancellationToken);

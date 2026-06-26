@@ -30,6 +30,7 @@ services:
       Jwt__Issuer: AmberTower
       Jwt__Audience: AmberTower.UnityClient
       Jwt__Key: local-dev-only-change-me-please-32-bytes-minimum
+      RefreshTokens__LifetimeDays: 30
 
   postgres:
     image: postgres:16

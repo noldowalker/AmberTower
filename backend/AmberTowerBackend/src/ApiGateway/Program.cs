@@ -51,6 +51,23 @@ app.MapPost("/api/auth/login", LoginAsync)
     .Produces<ApiErrorResponse>(StatusCodes.Status401Unauthorized)
     .Produces<ApiErrorResponse>(StatusCodes.Status503ServiceUnavailable);
 
+app.MapPost("/api/auth/refresh", RefreshAsync)
+    .WithName("Refresh")
+    .WithTags("Auth")
+    .Accepts<RefreshHttpRequest>("application/json")
+    .Produces<RefreshHttpResponse>(StatusCodes.Status200OK)
+    .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest)
+    .Produces<ApiErrorResponse>(StatusCodes.Status401Unauthorized)
+    .Produces<ApiErrorResponse>(StatusCodes.Status503ServiceUnavailable);
+
+app.MapPost("/api/auth/logout", LogoutAsync)
+    .WithName("Logout")
+    .WithTags("Auth")
+    .Accepts<LogoutHttpRequest>("application/json")
+    .Produces<LogoutHttpResponse>(StatusCodes.Status200OK)
+    .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest)
+    .Produces<ApiErrorResponse>(StatusCodes.Status503ServiceUnavailable);
+
 app.Run();
 
 static async Task<IResult> RegisterAsync(
@@ -115,7 +132,9 @@ static async Task<IResult> LoginAsync(
                 response.UserId,
                 response.Email,
                 response.AccessToken,
-                response.ExpiresAtUnixSeconds));
+                response.AccessTokenExpiresAtUnixSeconds,
+                response.RefreshToken,
+                response.RefreshTokenExpiresAtUnixSeconds));
         }
 
         return response.ErrorCode switch
@@ -123,6 +142,87 @@ static async Task<IResult> LoginAsync(
             "invalid_credentials" => Results.Json(
                 new ApiErrorResponse(response.ErrorCode, response.ErrorMessage),
                 statusCode: StatusCodes.Status401Unauthorized),
+            "validation_error" => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage)),
+            _ => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage))
+        };
+    }
+    catch (RpcException exception)
+    {
+        return Results.Json(
+            new ApiErrorResponse("auth_service_unavailable", $"Auth service call failed: {exception.Status.Detail}"),
+            statusCode: StatusCodes.Status503ServiceUnavailable);
+    }
+}
+
+static async Task<IResult> RefreshAsync(
+    RefreshHttpRequest request,
+    AuthGrpc.AuthGrpcClient authClient,
+    CancellationToken cancellationToken)
+{
+    if (string.IsNullOrWhiteSpace(request.RefreshToken))
+    {
+        return Results.BadRequest(new ApiErrorResponse("validation_error", "Refresh token is required."));
+    }
+
+    try
+    {
+        var response = await authClient.RefreshAsync(new RefreshRequest
+        {
+            RefreshToken = request.RefreshToken
+        }, cancellationToken: cancellationToken);
+
+        if (response.Success)
+        {
+            return Results.Ok(new RefreshHttpResponse(
+                response.UserId,
+                response.Email,
+                response.AccessToken,
+                response.AccessTokenExpiresAtUnixSeconds,
+                response.RefreshToken,
+                response.RefreshTokenExpiresAtUnixSeconds));
+        }
+
+        return response.ErrorCode switch
+        {
+            "invalid_refresh_token" => Results.Json(
+                new ApiErrorResponse(response.ErrorCode, response.ErrorMessage),
+                statusCode: StatusCodes.Status401Unauthorized),
+            "validation_error" => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage)),
+            _ => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage))
+        };
+    }
+    catch (RpcException exception)
+    {
+        return Results.Json(
+            new ApiErrorResponse("auth_service_unavailable", $"Auth service call failed: {exception.Status.Detail}"),
+            statusCode: StatusCodes.Status503ServiceUnavailable);
+    }
+}
+
+static async Task<IResult> LogoutAsync(
+    LogoutHttpRequest request,
+    AuthGrpc.AuthGrpcClient authClient,
+    CancellationToken cancellationToken)
+{
+    if (string.IsNullOrWhiteSpace(request.RefreshToken))
+    {
+        return Results.BadRequest(new ApiErrorResponse("validation_error", "Refresh token is required."));
+    }
+
+    try
+    {
+        var response = await authClient.LogoutAsync(new LogoutRequest
+        {
+            RefreshToken = request.RefreshToken
+        }, cancellationToken: cancellationToken);
+
+        if (response.Success)
+        {
+            return Results.Ok(new LogoutHttpResponse(true));
+        }
+
+        return response.ErrorCode switch
+        {
             "validation_error" => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage)),
             _ => Results.BadRequest(new ApiErrorResponse(response.ErrorCode, response.ErrorMessage))
         };

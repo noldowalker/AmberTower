@@ -14,6 +14,8 @@ public sealed class AuthDbContext : DbContext
 
     public DbSet<AuthUser> Users => Set<AuthUser>();
 
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuthUser>(entity =>
@@ -34,6 +36,27 @@ public sealed class AuthDbContext : DbContext
 
             entity.HasIndex(user => user.Email)
                 .IsUnique();
+        });
+
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.ToTable("auth_refresh_tokens");
+            entity.HasKey(refreshToken => refreshToken.Id);
+
+            entity.Property(refreshToken => refreshToken.TokenHash)
+                .HasMaxLength(128)
+                .IsRequired();
+
+            entity.Property(refreshToken => refreshToken.CreatedAtUtc)
+                .IsRequired();
+
+            entity.Property(refreshToken => refreshToken.ExpiresAtUtc)
+                .IsRequired();
+
+            entity.HasIndex(refreshToken => refreshToken.TokenHash)
+                .IsUnique();
+
+            entity.HasIndex(refreshToken => refreshToken.UserId);
         });
     }
 }
