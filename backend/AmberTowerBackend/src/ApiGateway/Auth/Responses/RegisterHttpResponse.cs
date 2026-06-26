@@ -1,4 +1,4 @@
-namespace ApiGateway.Auth;
+namespace ApiGateway.Auth.Responses;
 
 public sealed class RegisterHttpResponse
 {

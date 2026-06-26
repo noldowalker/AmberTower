@@ -28,10 +28,13 @@ builder.Services.AddGrpc();
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString(AuthDbContext.ConnectionStringName)));
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+builder.Services.Configure<RefreshTokenOptions>(builder.Configuration.GetSection(RefreshTokenOptions.SectionName));
 
 builder.Services.AddScoped<IAuthUserRepository, AuthUserRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddScoped<IRefreshTokenService, SecureRefreshTokenService>();
 builder.Services.AddScoped<AuthApplicationService>();
 
 var app = builder.Build();

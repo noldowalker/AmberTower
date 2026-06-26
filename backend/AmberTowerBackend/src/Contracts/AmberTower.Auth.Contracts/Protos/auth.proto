@@ -7,6 +7,8 @@ package ambertower.auth.v1;
 service AuthGrpc {
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Refresh (RefreshRequest) returns (RefreshResponse);
+  rpc Logout (LogoutRequest) returns (LogoutResponse);
 }
 
 message RegisterRequest {
@@ -32,7 +34,35 @@ message LoginResponse {
   string user_id = 2;
   string email = 3;
   string access_token = 4;
-  int64 expires_at_unix_seconds = 5;
+  int64 access_token_expires_at_unix_seconds = 5;
   string error_code = 6;
   string error_message = 7;
+  string refresh_token = 8;
+  int64 refresh_token_expires_at_unix_seconds = 9;
+}
+
+message RefreshRequest {
+  string refresh_token = 1;
+}
+
+message RefreshResponse {
+  bool success = 1;
+  string user_id = 2;
+  string email = 3;
+  string access_token = 4;
+  int64 access_token_expires_at_unix_seconds = 5;
+  string refresh_token = 6;
+  int64 refresh_token_expires_at_unix_seconds = 7;
+  string error_code = 8;
+  string error_message = 9;
+}
+
+message LogoutRequest {
+  string refresh_token = 1;
+}
+
+message LogoutResponse {
+  bool success = 1;
+  string error_code = 2;
+  string error_message = 3;
 }

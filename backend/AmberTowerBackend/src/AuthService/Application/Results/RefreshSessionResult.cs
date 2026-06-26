@@ -1,6 +1,6 @@
 namespace AuthService.Application;
 
-public sealed class LoginUserResult
+public sealed class RefreshSessionResult
 {
     public bool IsSuccess { get; init; }
 
