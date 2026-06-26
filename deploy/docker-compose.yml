@@ -11,6 +11,9 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://0.0.0.0:8080
       Grpc__AuthServiceUrl: http://authservice:8081
+      Jwt__Issuer: AmberTower
+      Jwt__Audience: AmberTower.UnityClient
+      Jwt__Key: local-dev-only-change-me-please-32-bytes-minimum
     ports:
       - "8080:8080"
 

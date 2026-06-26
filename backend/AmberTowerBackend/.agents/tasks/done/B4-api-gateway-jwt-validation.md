@@ -46,3 +46,12 @@ This task follows:
 - `C2-authentication-client-v1`
 
 The client can already obtain and cache access tokens. This task lets the backend verify those access tokens on protected public endpoints.
+
+## Manual Verification
+
+Until endpoint-level integration tests are introduced, verify manually:
+
+1. `GET /api/me` without `Authorization` returns `401 Unauthorized`.
+2. `GET /api/me` with a malformed bearer token returns `401 Unauthorized`.
+3. Login through `POST /api/auth/login`, then call `GET /api/me` with `Authorization: Bearer <accessToken>`.
+4. A valid access token returns `200 OK` with `userId` and `email`.

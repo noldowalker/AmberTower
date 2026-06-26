@@ -1,15 +1,12 @@
-using AmberTower.Auth.Contracts;
 using ApiGateway.Auth;
+using ApiGateway.CurrentUser;
+using ApiGateway.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddGrpcClient<AuthGrpc.AuthGrpcClient>(options =>
-{
-    var authServiceUrl = builder.Configuration["Grpc:AuthServiceUrl"] ?? "http://localhost:5081";
-    options.Address = new Uri(authServiceUrl);
-});
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddAuthGrpcClient(builder.Configuration);
+builder.Services.AddGatewayAuthentication(builder.Configuration);
+builder.Services.AddGatewaySwagger();
 
 var app = builder.Build();
 
@@ -18,6 +15,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapGet("/", () => Results.Ok(new
 {
@@ -33,5 +33,6 @@ app.MapGet("/health", () => Results.Ok(new
 }));
 
 app.MapAuthEndpoints();
+app.MapCurrentUserEndpoints();
 
 app.Run();
