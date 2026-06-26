@@ -2,7 +2,7 @@ namespace AuthService.Application;
 
 public sealed class AccessTokenResult
 {
-    public required string Token { get; init; }
+    public string Token { get; init; } = string.Empty;
 
-    public required DateTime ExpiresAtUtc { get; init; }
+    public DateTime ExpiresAtUtc { get; init; }
 }
