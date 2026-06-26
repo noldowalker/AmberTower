@@ -146,11 +146,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 31280688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0603eb3a8c684464e87858b014edf320, type: 3}
+  m_Script: {fileID: 11500000, guid: 622897ca36f43a640af79e0e3ad5b955, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AmberTower.Client.Ui.HealthCheck.HealthCheckPanel
-  defaultHealthUrl: http://localhost:8080/health
-  panelStyleSheet: {fileID: 7433441132597879392, guid: d68db30541c02554e9e033f5d3784c32, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::AmberTower.Client.Ui.Auth.AuthPanel
+  defaultApiBaseUrl: http://localhost:8080
+  panelStyleSheet: {fileID: 7433441132597879392, guid: b132fcc5ff5139e47908c8868858a16d, type: 3}
 --- !u!114 &31280690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
   m_PanelSettings: {fileID: 11400000, guid: b82d76a0089f3af4eb4815b2dcfa6b45, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 32d7fd70fab33504b9f1797ad94f6ca3, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: 3d3bc6603260dc840b51f8d575954cf4, type: 3}
   m_SortingOrder: 0
   m_Position: 0
   m_WorldSpaceSizeMode: 1

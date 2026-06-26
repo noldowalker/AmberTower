@@ -1,0 +1,59 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement class="auth-screen">
+        <ui:VisualElement class="auth-panel">
+            <ui:VisualElement class="auth-panel__header">
+                <ui:Label class="auth-panel__title" text="AmberTower Auth" />
+                <ui:Label
+                    name="auth-state-label"
+                    class="auth-panel__state"
+                    text="Ready." />
+            </ui:VisualElement>
+
+            <ui:TextField
+                name="auth-api-base-url-field"
+                class="auth-panel__field"
+                label="API" />
+
+            <ui:VisualElement
+                name="auth-form-container"
+                class="auth-panel__form">
+                <ui:TextField
+                    name="auth-email-field"
+                    class="auth-panel__field"
+                    label="Email" />
+                <ui:TextField
+                    name="auth-password-field"
+                    class="auth-panel__field"
+                    label="Password" />
+                <ui:VisualElement class="auth-panel__actions">
+                    <ui:Button
+                        name="auth-login-button"
+                        class="auth-panel__button"
+                        text="Login" />
+                    <ui:Button
+                        name="auth-register-button"
+                        class="auth-panel__button auth-panel__button--secondary"
+                        text="Register" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement
+                name="auth-session-container"
+                class="auth-panel__session">
+                <ui:Label
+                    name="auth-session-email-label"
+                    class="auth-panel__session-email"
+                    text="" />
+                <ui:Button
+                    name="auth-change-account-button"
+                    class="auth-panel__button"
+                    text="Change account" />
+            </ui:VisualElement>
+
+            <ui:Label
+                name="auth-result-label"
+                class="auth-panel__result"
+                text="" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
